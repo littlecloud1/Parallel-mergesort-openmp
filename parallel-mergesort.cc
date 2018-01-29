@@ -50,7 +50,7 @@ void Pmerge (keytype* T, int p1, int r1, int p2, int r2,keytype* A, int p3)
 		int q3 = p3 + (q1 - p1) + (q2 - p2);
 		*(A + q3) = *(T + q1);
 		Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1);
-	
+		Pmerge(T,q1+1,r1,q2,r2,A,q3+1)
 	}
 
 
