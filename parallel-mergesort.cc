@@ -4,6 +4,8 @@
  *  \brief Implement your parallel mergesort in this file.
  */
 
+
+// lai man tang, yuan qin
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,6 +30,8 @@ void mergesort(keytype* A, int p, int r)
 		Pmerge(A, p, q, q+1, r, T,sorted);//!!!!!!!
 
 	}
+		
+
 
 }
 void Pmerge (keytype* T, int p1, int r1, int p2, int r2,keytype* A, int p3)
@@ -71,4 +75,5 @@ int BinarySearch(int x, keytype* T, int p, int r)
 	}
 	return high;
 }
+
 /* eof */
