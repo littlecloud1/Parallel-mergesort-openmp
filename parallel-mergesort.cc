@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 #include "sort.hh"
-
+keytype* B
 void
 parallelSort (int N, keytype* A)
 {
@@ -19,17 +19,21 @@ parallelSort (int N, keytype* A)
 	//sequentialSort(N, A);
 
 }
-
-void mergesort(keytype* A, int p, int r) 
+void Pmergesort(keytype* A, int p, int r, keytype* B, s)
 {
-	if (p < r)
-	{
-		int q = (p + r) / 2;
-		mergesort(A, p, q);
-		mergesort(A, q + 1, r);	
-		Pmerge(A, p, q, q+1, r, T,sorted);//!!!!!!!
+        int n = r-p+1;
+        if (n == 1){
+                B[s] = A[p]
+        }else{
+                keytype* T;
+                int q = (p + r) / 2;
+                int qt= q-p+1;
+                Pmergesort(A,p,q,T,qt+1);
+                Pmergesort(T,1,qt,qt+1,n,B,s);
+        }
 
-	}
+}
+
 		
 
 
