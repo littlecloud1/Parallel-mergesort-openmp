@@ -11,11 +11,12 @@
 #include <stdlib.h>
 
 #include "sort.hh"
-keytype* B
+keytype* B;
+int s = & B;
 void
 parallelSort (int N, keytype* A)
 {
-	mergesort(A, 0, N);
+	Pmergesort(A, 0, N, B, s);
 	//sequentialSort(N, A);
 
 }
