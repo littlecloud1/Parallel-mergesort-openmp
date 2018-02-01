@@ -90,7 +90,8 @@ void parallelSort(int N, keytype* A)
 	#pragma omp parallel num_threads(16);
 	keytype* B = newKeys(N);
 	B = A;
-	#pragma omp parallel{
+	#pragma omp parallel
+	{
 		#pragma omp single
 		Pmergesort(B, 0, N - 1, A, 0);	
 	}
