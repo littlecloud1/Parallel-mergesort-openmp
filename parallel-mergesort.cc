@@ -29,6 +29,27 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 
 }
 
+void exchange(int &a, int &b)
+{
+	int temp = a;
+	a = b;
+	b = temp;
+
+}
+
+
+int BinarySearch(int x, keytype* T, int p, int r)
+{
+	int low = p;
+	int high = (p >(r + 1)) ? p : (r + 1);	//max(p,r+1)
+	while (low < high) {
+		int mid = (low + high) / 2;
+		if (x <= *(T + mid))
+			high = mid;
+		else low = mid + 1;
+	}
+	return high;
+}
 
 void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 {
@@ -52,25 +73,7 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 
 }
 
-void exchange(int &a, int &b)
-{
-	int temp = a;
-	a = b;
-	b = temp;
 
-}
-int BinarySearch(int x, keytype* T, int p, int r)
-{
-	int low = p;
-	int high = (p >(r + 1)) ? p : (r + 1);	//max(p,r+1)
-	while (low < high) {
-		int mid = (low + high) / 2;
-		if (x <= *(T + mid))
-			high = mid;
-		else low = mid + 1;
-	}
-	return high;
-}
 
 void parallelSort(int N, keytype* A)
 {
