@@ -12,7 +12,7 @@
 #include <strings.h>
 
 #include "sort.hh"
-
+#include "sequential-mergesort.cc"
 /* ============================================================
  * The following code implements a sequentialSort().
  */
@@ -31,7 +31,7 @@ static int compare (const void* a, const void* b)
 
 void sequentialSort (int N, keytype* A)
 {
-  qsort (A, N, sizeof (keytype), compare);
+  mSort(N, A);
 }
 
 /* ============================================================
