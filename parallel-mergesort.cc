@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include "sort.hh"
 
-
 void exchange(int &a, int &b)
 {
 	int temp = a;
@@ -38,7 +37,7 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 {
 	int n1 = r1 - p1 + 1;
 	int n2 = r2 - p2 + 1;
-	if (n1 < n2) {//ensure that n1>=n2
+	if (n1 < n2) {
 		exchange(p1, p2);
 		exchange(r1, r2);
 		exchange(n1, n2);
@@ -46,9 +45,9 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 	if (n1 == 0) return;
 	else {
 		int q1 = (p1 + r1) / 2;
-		int q2 = BinarySearch(*(T + q1), T, p2, r2);
+		int q2 = BinarySearch(T[q1], T, p2, r2);
 		int q3 = p3 + (q1 - p1) + (q2 - p2);
-		*(A + q3) = *(T + q1);
+		A[q3] = T[q1];
 		Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3);
 		Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1);
 	}
@@ -58,16 +57,18 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 
 void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 {
+
 	int n = r - p + 1;
 	if (n == 1) {
 		B[s] = A[p];
 	}
 	else {
+		keytype* T = newKey(n);
 		int q = (p + r) / 2;
 		int qt = q - p + 1;
-		Pmergesort(A, p, q, B, qt + 1);
-		Pmergesort(A, qt, qt + 1, B, s);
-		Pmerge(A, 1, qt, qt + 1, n, B, s);
+		Pmergesort(A, p, q, T, 1);
+		Pmergesort(A, q + 1, r, T, qt + 1);
+		Pmerge(T, 1, qt, qt + 1, n, B, s);
 	}
 
 }
@@ -76,8 +77,8 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 void parallelSort(int N, keytype* A)
 {
 
-	keytype* B = newKeys(N);
-	Pmergesort(A, 0, N, B, 0);
-	//sequentialSort(N, A);
+	keytype* B = newKey(N);
+	B = A;
+	Pmergesort(B, 0, N - 1, A, 0);
 
 }
