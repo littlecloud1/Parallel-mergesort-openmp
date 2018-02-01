@@ -69,10 +69,10 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 		keytype* T = newKeys(n);
 		int q = (p + r) / 2;
 		int qt = q - p + 1;
-		#pragma omp parallel
+		#pragma omp task
 		Pmergesort(A, p, q, T, 1);
-		#pragma omp parallel
 		Pmergesort(A, q + 1, r, T, qt + 1);
+		#pragma omp taskwait
 		Pmerge(T, 1, qt, qt + 1, n, B, s);
 	}
 
@@ -84,6 +84,10 @@ void parallelSort(int N, keytype* A)
 
 	keytype* B = newKeys(N);
 	B = A;
-	Pmergesort(B, 0, N - 1, A, 0);
+	#pragma omp parallel{
+		#pragma omp single
+		Pmergesort(B, 0, N - 1, A, 0);	
+	}
+	
 
 }
