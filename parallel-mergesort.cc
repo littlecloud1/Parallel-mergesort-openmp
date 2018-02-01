@@ -49,10 +49,14 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 		int q2 = BinarySearch(T[q1], T, p2, r2);
 		int q3 = p3 + (q1 - p1) + (q2 - p2);
 		A[q3] = T[q1];
-		#pragma omp parallel
-		Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3);
-		#pragma omp parallel
-		Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1);
+		#pragma omp parallel sections
+		{
+#pragma omp section
+			Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3);
+#pragma omp section
+			Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1); 
+		
+		}
 	}
 
 
@@ -73,6 +77,13 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 		Pmergesort(A, p, q, T, 1);
 		Pmergesort(A, q + 1, r, T, qt + 1);
 		#pragma omp taskwait
+		#pragma omp parallel sections
+		{
+			#pragma omp section
+			Pmergesort(A, p, q, T, 1);
+			#pragma omp section
+			Pmergesort(A, q + 1, r, T, qt + 1); 
+		}
 		Pmerge(T, 1, qt, qt + 1, n, B, s);
 	}
 
@@ -81,7 +92,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 
 void parallelSort(int N, keytype* A)
 {
-
+	#pragma omp parallel num_threads(64);
 	keytype* B = newKeys(N);
 	B = A;
 	#pragma omp parallel{
@@ -89,5 +100,7 @@ void parallelSort(int N, keytype* A)
 		Pmergesort(B, 0, N - 1, A, 0);	
 	}
 	
+	#pragma omp parallel
+	Pmergesort(B, 0, N - 1, A, 0);
 
 }
