@@ -73,7 +73,6 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 		Pmergesort(A, p, q, T, 1);
 		#pragma omp parallel
 		Pmergesort(A, q + 1, r, T, qt + 1);
-		#pragma omp parallel
 		Pmerge(T, 1, qt, qt + 1, n, B, s);
 	}
 
