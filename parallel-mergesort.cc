@@ -12,6 +12,7 @@
 #include <omp.h>
 #include "sort.hh"
 
+
 void exchange(int &a, int &b)
 {
 	int temp = a;
@@ -81,7 +82,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 
 void parallelSort(int N, keytype* A)
 {
-
+	omp_set_num_threads(16);
 	keytype* B = newKeys(N);
 	B = A;
 	Pmergesort(B, 0, N - 1, A, 0);
