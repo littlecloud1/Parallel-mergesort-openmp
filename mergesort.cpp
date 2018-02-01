@@ -52,17 +52,18 @@ void Pmerge(int* T, int p1, int r1, int p2, int r2, int* A, int p3)
 
 void Pmergesort(int* A, int p, int r, int* B, int s)
 {
-	
+
 	int n = r - p + 1;
 	if (n == 1) {
 		B[s] = A[p];
 	}
 	else {
+		int* T = (int*)malloc(n * sizeof(int*));
 		int q = (p + r) / 2;
 		int qt = q - p + 1;
-		Pmergesort(A, p, q, B, qt + 1);
-		Pmergesort(A, qt, qt + 1, B, s);
-		Pmerge(A, 1, qt, qt + 1, n, B, s);
+		Pmergesort(A, p, q, T, 1);
+		Pmergesort(A, q + 1, r, T, qt + 1);
+		Pmerge(T, 1, qt, qt + 1, n, B, s);
 	}
 
 }
@@ -82,11 +83,11 @@ void parallelSort(int N, int* A)
 
 int main()
 {
-	int A[13] = {4, 6, 7, 2, 4, 6, 3, 21, 435, 123, 43534, 213, 443};
+	int A[13] = { 4, 6, 7, 2, 4, 6, 3, 21, 435, 123, 43534, 213, 443 };
 	parallelSort(13, A);
 	for (int i = 0; i < 13; i++) {
 		printf("%d ", A[i]);
 	}
-    return 0;
+	return 0;
 }
 
