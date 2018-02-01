@@ -9,13 +9,15 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "sort.hh"
-keytype* B;
-int s = &B;
-void
-parallelSort(int N, keytype* A)
+
+
+
+void parallelSort(int N, keytype* A)
 {
+
+	keytype* B = newKeys(N);
+	int s = B[0];
 	Pmergesort(A, 0, N, B, s);
 	//sequentialSort(N, A);
 
@@ -37,9 +39,6 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, s)
 }
 
 
-
-
-}
 void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 {
 	int n1 = r1 - p1 + 1;
@@ -81,5 +80,3 @@ int BinarySearch(int x, keytype* T, int p, int r)
 	}
 	return high;
 }
-
-/* eof */
