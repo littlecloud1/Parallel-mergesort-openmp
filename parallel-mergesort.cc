@@ -12,23 +12,6 @@
 #include "sort.hh"
 
 
-
-void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
-{
-	int n = r - p + 1;
-	if (n == 1) {
-		B[s] = A[p];
-	}
-	else {
-		keytype* T;
-		int q = (p + r) / 2;
-		int qt = q - p + 1;
-		Pmergesort(A, p, q, T, qt + 1);
-		Pmergesort(T, 1, qt, qt + 1, n, B, s);
-	}
-
-}
-
 void exchange(int &a, int &b)
 {
 	int temp = a;
@@ -73,6 +56,22 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 
 }
 
+void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
+{
+	int n = r - p + 1;
+	if (n == 1) {
+		B[s] = A[p];
+	}
+	else {
+		keytype* T;
+		int q = (p + r) / 2;
+		int qt = q - p + 1;
+		Pmergesort(A, p, q, T, qt + 1);
+		Pmergesort(T, qt, qt + 1, n, B, s);
+		Pmerge(T, 1, qt, qt + 1, n, B, s)
+	}
+
+}
 
 
 void parallelSort(int N, keytype* A)
