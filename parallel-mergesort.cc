@@ -17,12 +17,11 @@ void parallelSort(int N, keytype* A)
 {
 
 	keytype* B = newKeys(N);
-	int s = B[0];
-	Pmergesort(A, 0, N, B, s);
+	Pmergesort(A, 0, N, B, 0);
 	//sequentialSort(N, A);
 
 }
-void Pmergesort(keytype* A, int p, int r, keytype* B, s)
+void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 {
 	int n = r - p + 1;
 	if (n == 1) {
