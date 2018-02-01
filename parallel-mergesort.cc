@@ -13,14 +13,6 @@
 
 
 
-void parallelSort(int N, keytype* A)
-{
-
-	keytype* B = newKeys(N);
-	Pmergesort(A, 0, N, B, 0);
-	//sequentialSort(N, A);
-
-}
 void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 {
 	int n = r - p + 1;
@@ -78,4 +70,13 @@ int BinarySearch(int x, keytype* T, int p, int r)
 		else low = mid + 1;
 	}
 	return high;
+}
+
+void parallelSort(int N, keytype* A)
+{
+
+	keytype* B = newKeys(N);
+	Pmergesort(A, 0, N, B, 0);
+	//sequentialSort(N, A);
+
 }
