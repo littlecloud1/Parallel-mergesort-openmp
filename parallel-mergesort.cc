@@ -12,9 +12,9 @@
 
 #include "sort.hh"
 
-void
-parallelSort (int N, keytype* A)
+void parallelSort (int N, keytype* A)
 {
+
 	mergesort(A, 0, N);
 	//sequentialSort(N, A);
 
@@ -27,7 +27,8 @@ void mergesort(keytype* A, int p, int r)
 		int q = (p + r) / 2;
 		mergesort(A, p, q);
 		mergesort(A, q + 1, r);	
-		Pmerge(A, p, q, q+1, r, T,sorted);//!!!!!!!
+		keytype* T = new keytype();
+		Pmerge(A, p, q, q+1, r, T ,0);//!!!!!!!
 
 	}
 		
