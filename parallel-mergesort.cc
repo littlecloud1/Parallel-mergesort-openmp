@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <omp.h>
 #include "sort.hh"
 
 void exchange(int &a, int &b)
@@ -48,7 +49,9 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 		int q2 = BinarySearch(T[q1], T, p2, r2);
 		int q3 = p3 + (q1 - p1) + (q2 - p2);
 		A[q3] = T[q1];
+		#pragma omp parallel
 		Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3);
+		#pragma omp parallel
 		Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1);
 	}
 
@@ -66,8 +69,11 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 		keytype* T = newKeys(n);
 		int q = (p + r) / 2;
 		int qt = q - p + 1;
+		#pragma omp parallel
 		Pmergesort(A, p, q, T, 1);
+		#pragma omp parallel
 		Pmergesort(A, q + 1, r, T, qt + 1);
+		#pragma omp parallel
 		Pmerge(T, 1, qt, qt + 1, n, B, s);
 	}
 
