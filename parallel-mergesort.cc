@@ -4,6 +4,7 @@
  *  \brief Implement your parallel mergesort in this file.
  */
 
+//Jan.30.2018
 
 // lai man tang, yuan qin
 #include <assert.h>
@@ -11,17 +12,26 @@
 #include <stdlib.h>
 
 #include "sort.hh"
+<<<<<<< HEAD
 
 void parallelSort (int N, keytype* A)
 {
 
 	mergesort(A, 0, N);
+=======
+keytype* B;
+int s = & B;
+void
+parallelSort (int N, keytype* A)
+{
+	Pmergesort(A, 0, N, B, s);
+>>>>>>> bdc58f287dff44eff9b60384435ff3e7832c9afa
 	//sequentialSort(N, A);
 
 }
-
-void mergesort(keytype* A, int p, int r) 
+void Pmergesort(keytype* A, int p, int r, keytype* B, s)
 {
+<<<<<<< HEAD
 	if (p < r)
 	{
 		int q = (p + r) / 2;
@@ -29,8 +39,21 @@ void mergesort(keytype* A, int p, int r)
 		mergesort(A, q + 1, r);	
 		keytype* T = new keytype();
 		Pmerge(A, p, q, q+1, r, T ,0);//!!!!!!!
+=======
+        int n = r-p+1;
+        if (n == 1){
+                B[s] = A[p]
+        }else{
+                keytype* T;
+                int q = (p + r) / 2;
+                int qt= q-p+1;
+                Pmergesort(A,p,q,T,qt+1);
+                Pmergesort(T,1,qt,qt+1,n,B,s);
+        }
 
-	}
+}
+>>>>>>> bdc58f287dff44eff9b60384435ff3e7832c9afa
+
 		
 
 
