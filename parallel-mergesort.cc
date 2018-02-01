@@ -17,7 +17,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 {
 	int n = r - p + 1;
 	if (n == 1) {
-		B[s] = A[p]
+		B[s] = A[p];
 	}
 	else {
 		keytype* T;
