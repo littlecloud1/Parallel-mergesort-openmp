@@ -63,7 +63,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 		B[s] = A[p];
 	}
 	else {
-		keytype* T = newKey(n);
+		keytype* T = newKeys(n);
 		int q = (p + r) / 2;
 		int qt = q - p + 1;
 		Pmergesort(A, p, q, T, 1);
@@ -77,7 +77,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 void parallelSort(int N, keytype* A)
 {
 
-	keytype* B = newKey(N);
+	keytype* B = newKeys(N);
 	B = A;
 	Pmergesort(B, 0, N - 1, A, 0);
 
