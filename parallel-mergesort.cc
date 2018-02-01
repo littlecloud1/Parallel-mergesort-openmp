@@ -66,8 +66,8 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 		int q = (p + r) / 2;
 		int qt = q - p + 1;
 		Pmergesort(A, p, q, B, qt + 1);
-		Pmergesort(T, qt, qt + 1, B, s);
-		Pmerge(T, 1, qt, qt + 1, n, B, s)
+		Pmergesort(A, qt, qt + 1, B, s);
+		Pmerge(A, 1, qt, qt + 1, n, B, s)
 	}
 
 }
