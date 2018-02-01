@@ -84,7 +84,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 
 void parallelSort(int N, keytype* A)
 {
-	#pragma omp parallel num_threads(16);
+	#pragma omp parallel num_threads(64);
 	keytype* B = newKeys(N);
 	B = A;
 	Pmergesort(B, 0, N - 1, A, 0);
