@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <omp.h>
 
+#include "sort.hh"
 void exchange(int &a, int &b)
 {
 	int temp = a;
