@@ -79,7 +79,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 		{
 #pragma omp section
 			{
-				Pmergesort(A, p, q, T, 1);
+				Pmergesort(A, p, q, T, 0);
 			}
 
 #pragma omp section
