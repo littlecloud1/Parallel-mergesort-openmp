@@ -54,16 +54,16 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3, int 
 			{
 #pragma omp section
 				{
-					Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3, depth); }
+					Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3, depth/2); }
 #pragma omp section
 				{
-					Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1, depth);
+					Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1, depth/2);
 				}
 			}
 		}
 		else {
 			Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3, 0);
-			Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1, depth);
+			Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1, 0);
 		
 		}
 
