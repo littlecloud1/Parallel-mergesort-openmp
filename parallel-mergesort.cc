@@ -109,6 +109,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 
 void parallelSort(int N, keytype* A)
 {
+	omp_set_num_threads(16);
 	int depth = omp_get_num_threads();
 #pragma omp parallel
 	{
