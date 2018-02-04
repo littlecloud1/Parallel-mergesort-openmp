@@ -72,14 +72,14 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 		B[s] = A[p];
 	}
 	else {
-		keytype* T = newKeys(n);
+		keytype* T = newKeys(n+1);
 		int q = (p + r) / 2;
 		int qt = q - p + 1;
 #pragma omp parallel sections
 		{
 #pragma omp section
 			{
-				Pmergesort(A, p, q, T, 0);
+				Pmergesort(A, p, q, T, 1);
 			}
 
 #pragma omp section
@@ -88,6 +88,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 			}
 		}
 		Pmerge(T, 1, qt, qt + 1, n, B, s);
+		free(T);
 	}
 
 }
@@ -95,9 +96,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 
 void parallelSort(int N, keytype* A)
 {
-	omp_set_num_threads(16);
-	keytype* B = newCopy(N, A);
-
+	
 #pragma omp parallel
 	{
 #pragma omp single
