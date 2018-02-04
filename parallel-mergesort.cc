@@ -100,7 +100,7 @@ void parallelSort(int N, keytype* A)
 #pragma omp parallel
 	{
 #pragma omp single
-		Pmergesort(B, 0, N - 1, A, 0);
+		Pmergesort(A, 0, N - 1, A, 0);
 	}
 
 
