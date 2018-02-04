@@ -34,7 +34,7 @@ int BinarySearch(int x, keytype* T, int p, int r)
 	return high;
 }
 
-void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
+void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3, int depth)
 {
 	int n1 = r1 - p1 + 1;
 	int n2 = r2 - p2 + 1;
@@ -49,22 +49,28 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3)
 		int q2 = BinarySearch(T[q1], T, p2, r2);
 		int q3 = p3 + (q1 - p1) + (q2 - p2);
 		A[q3] = T[q1];
+		if (depth > 1) {
 #pragma omp parallel sections
-		{
-#pragma omp section
 			{
-				Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3); }
 #pragma omp section
-			{
-				Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1);
+				{
+					Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3, depth); }
+#pragma omp section
+				{
+					Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1, depth);
+				}
 			}
 		}
-
+		else {
+			Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3, depth);
+			Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3, depth);
+		
+		}
 
 	}
 }
 
-void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
+void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 {
 
 	int n = r - p + 1;
@@ -72,35 +78,42 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s)
 		B[s] = A[p];
 	}
 	else {
-		keytype* T = newKeys(n+1);
+		keytype* T = newKeys(n + 1);
 		int q = (p + r) / 2;
 		int qt = q - p + 1;
+		if (depth > 1) {
 #pragma omp parallel sections
-		{
-#pragma omp section
 			{
-				Pmergesort(A, p, q, T, 1);
-			}
+#pragma omp section
+				{
+					Pmergesort(A, p, q, T, 1, depth);
+				}
 
 #pragma omp section
-			{
-				Pmergesort(A, q + 1, r, T, qt + 1);
+				{
+					Pmergesort(A, q + 1, r, T, qt + 1, , depth);
+				}
 			}
+			Pmerge(T, 1, qt, qt + 1, n, B, s,  depth);
+			free(T);
 		}
-		Pmerge(T, 1, qt, qt + 1, n, B, s);
-		free(T);
+		else {
+			Pmergesort(A, p, q, T, 1 , depth);
+			Pmergesort(A, q + 1, r, T, qt + 1, depth);
+			Pmerge(T, 1, qt, qt + 1, n, B, s, depth);
+		
+		}
 	}
-
 }
 
 
 void parallelSort(int N, keytype* A)
 {
-	
+	int depth = omp_get_num_threads();
 #pragma omp parallel
 	{
 #pragma omp single
-		Pmergesort(A, 0, N - 1, A, 0);
+		Pmergesort(A, 0, N - 1, A, 0, depth);
 	}
 
 
