@@ -86,12 +86,12 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 			{
 #pragma omp section
 				{
-					Pmergesort(A, p, q, T, 1, depth);
+					Pmergesort(A, p, q, T, 1, depth/2);
 				}
 
 #pragma omp section
 				{
-					Pmergesort(A, q + 1, r, T, qt + 1, depth);
+					Pmergesort(A, q + 1, r, T, qt + 1, depth/2);
 				}
 			}
 			Pmerge(T, 1, qt, qt + 1, n, B, s,  depth);
@@ -101,7 +101,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 			Pmergesort(A, p, q, T, 1 , depth);
 			Pmergesort(A, q + 1, r, T, qt + 1, depth);
 			Pmerge(T, 1, qt, qt + 1, n, B, s, depth);
-		
+			free(T);
 		}
 	}
 }
