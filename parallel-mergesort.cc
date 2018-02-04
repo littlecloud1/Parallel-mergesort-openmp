@@ -62,8 +62,8 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3, int 
 			}
 		}
 		else {
-			Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3, depth);
-			Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3, depth);
+			Pmerge(T, p1, q1 - 1, p2, q2 - 1, A, p3, 0);
+			Pmerge(T, q1 + 1, r1, q2, r2, A, q3 + 1, depth);
 		
 		}
 
@@ -98,9 +98,9 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 			free(T);
 		}
 		else {
-			Pmergesort(A, p, q, T, 1 , depth);
-			Pmergesort(A, q + 1, r, T, qt + 1, depth);
-			Pmerge(T, 1, qt, qt + 1, n, B, s, depth);
+			Pmergesort(A, p, q, T, 1 , 0);
+			Pmergesort(A, q + 1, r, T, qt + 1, 0);
+			Pmerge(T, 1, qt, qt + 1, n, B, s, 0);
 			free(T);
 		}
 	}
