@@ -21,13 +21,6 @@ void exchange(int &a, int &b)
 
 }
 
-bool comp(int &a, int &b)
-{
-	if (a < b) return true;
-	else return false;
-
-}
-
 
 int BinarySearch(int x, keytype* T, int p, int r)
 {
@@ -77,25 +70,26 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 {
 
 	int n = r - p + 1;
+	if (n < 1) return;
 	if (n == 1) {
 		B[s] = A[p];
 	}
 	else {
-		keytype* T = newKeys(n + 1);
 		int q = (p + r) / 2;
 		int qt = q - p + 1;
 		if (depth > 1) {
+			keytype* T = newKeys(n);
 #pragma omp task
-					Pmergesort(A, p, q, T, 1, depth/2);
-					Pmergesort(A, q + 1, r, T, qt + 1, depth/2);
+					Pmergesort(A, p, q, T, 0, depth/2);
+					Pmergesort(A, q + 1, r, T, qt, depth/2);
 #pragma omp taskwait	
-			Pmerge(T, 1, qt, qt + 1, n, B, s,  depth);
+			Pmerge(T, 0, qt-1, qt , n-1, B, s,  depth);
 			free(T);
 		}
 		else {
-			std::sort(A + p, A + q);
-			std::sort(A + q + 1, A + r);
-			std::merge(A + p, A + q, A + q + 1, A + r, B);
+			std::sort(A + p, A + q + 1);
+			std::sort(A + q + 1, A + r + 1);
+			std::merge(A + p, A + q + 1, A + q + 1, A + r + 1, B + s);
 		}
 	}
 }
@@ -103,10 +97,11 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 
 void parallelSort(int N, keytype* A)
 {
-	omp_set_num_threads(16);
-	int depth = omp_get_num_threads();
+
+	
 #pragma omp parallel
 	{
+		int depth = omp_get_num_threads();
 #pragma omp single
 		Pmergesort(A, 0, N - 1, A, 0, depth);
 	}
