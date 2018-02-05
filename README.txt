@@ -1,6 +1,6 @@
 Author: Lai Man Tang, Yuan Qin
 Last modified Date: 2/4/2018
-email: laimt@uci.edu, yqin@uci.edu
+email: laimt@uci.edu, yqin7@uci.edu
 ----------------------------------
 
 file: parallel-mergesort.cc mergesort.o36440988
