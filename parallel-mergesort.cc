@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <algorithm>
 #include <omp.h>
 
 #include "sort.hh"
@@ -17,6 +18,13 @@ void exchange(int &a, int &b)
 	int temp = a;
 	a = b;
 	b = temp;
+
+}
+
+void comp(int &a, int &b)
+{
+	if (a < b) return true;
+	else return false;
 
 }
 
@@ -85,10 +93,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 			free(T);
 		}
 		else {
-			Pmergesort(A, p, q, T, 1 , 0);
-			Pmergesort(A, q + 1, r, T, qt + 1, 0);
-			Pmerge(T, 1, qt, qt + 1, n, B, s, 0);
-			free(T);
+			merge()
 		}
 	}
 }
