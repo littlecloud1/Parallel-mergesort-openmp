@@ -57,8 +57,8 @@ void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3, int 
 			
 		}
 
-	}
 }
+
 
 void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 {
