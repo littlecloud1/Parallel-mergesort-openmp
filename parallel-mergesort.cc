@@ -93,9 +93,9 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 			free(T);
 		}
 		else {
-			sort(A + p, A + q);
-			sort(A + q + 1, A + r);
-			merge(A + p, A + q, A + q + 1, A + r, comp);
+			std::sort(A + p, A + q);
+			std::sort(A + q + 1, A + r);
+			std::merge(A + p, A + q, A + q + 1, A + r, comp);
 		}
 	}
 }
