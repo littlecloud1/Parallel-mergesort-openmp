@@ -93,7 +93,9 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 			free(T);
 		}
 		else {
-			merge()
+			sort(A + p, A + q);
+			sort(A + q + 1, A + r);
+			merge(A + p, A + q, A + q + 1, A + r, B);
 		}
 	}
 }
