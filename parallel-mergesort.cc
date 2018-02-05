@@ -28,7 +28,7 @@ void exchange(int &a, int &b)
 
 }
 
-//BinarySearch function, used in Pmerge. 
+//BinarySearch function, used in Pmerge to locate. 
 int BinarySearch(int x, keytype* T, int p, int r)
 {
 	int low = p;
@@ -45,7 +45,7 @@ int BinarySearch(int x, keytype* T, int p, int r)
 //Pmerge function
 void Pmerge(keytype* T, int p1, int r1, int p2, int r2, keytype* A, int p3, int depth)
 {
-	//caculate the compare element
+	//calculate the compare element
 	int n1 = r1 - p1 + 1;
 	int n2 = r2 - p2 + 1;
 	if (n1 < n2) {
@@ -92,7 +92,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 		int qt = q - p + 1;
 		if (depth > 1) {
 			keytype* T = newKeys(n);
-			//spawn
+			//spawn and sync until both parallel mergesort returned
 #pragma omp task
 					Pmergesort(A, p, q, T, 0, depth/2);
 					Pmergesort(A, q + 1, r, T, qt, depth/2);
