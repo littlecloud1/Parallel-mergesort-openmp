@@ -21,7 +21,7 @@ void exchange(int &a, int &b)
 
 }
 
-void comp(int &a, int &b)
+bool comp(int &a, int &b)
 {
 	if (a < b) return true;
 	else return false;
@@ -95,7 +95,7 @@ void Pmergesort(keytype* A, int p, int r, keytype* B, int s, int depth)
 		else {
 			sort(A + p, A + q);
 			sort(A + q + 1, A + r);
-			merge(A + p, A + q, A + q + 1, A + r, B);
+			merge(A + p, A + q, A + q + 1, A + r, comp);
 		}
 	}
 }
